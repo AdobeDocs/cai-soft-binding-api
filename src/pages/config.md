@@ -1,5 +1,5 @@
 - pathPrefix:
-    - /dev-site-documentation-template/
+    - /cai-soft-binding-api/
 
 - versions:
     - [v2.0](/index.md) selected
