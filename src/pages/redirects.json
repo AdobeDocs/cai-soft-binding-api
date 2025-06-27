@@ -1,1 +1,100 @@
-{"total":23,"offset":0,"limit":23,"data":[{"Source":"/dev-site-documentation-template","Destination":"/dev-site-documentation-template/"},{"Source":"/dev-site-documentation-template/index","Destination":"/dev-site-documentation-template/"},{"Source":"/dev-site-documentation-template/support","Destination":"/dev-site-documentation-template/support/"},{"Source":"/dev-site-documentation-template/support/index","Destination":"/dev-site-documentation-template/support/"},{"Source":"/dev-site-documentation-template/support/contribute","Destination":"/dev-site-documentation-template/support/contribute/"},{"Source":"/dev-site-documentation-template/support/contribute/index","Destination":"/dev-site-documentation-template/support/contribute/"},{"Source":"/dev-site-documentation-template/support/community","Destination":"/dev-site-documentation-template/support/community/"},{"Source":"/dev-site-documentation-template/support/community/index","Destination":"/dev-site-documentation-template/support/community/"},{"Source":"/dev-site-documentation-template/support/FAQ","Destination":"/dev-site-documentation-template/support/FAQ/"},{"Source":"/dev-site-documentation-template/support/FAQ/index","Destination":"/dev-site-documentation-template/support/FAQ/"},{"Source":"/dev-site-documentation-template/guides","Destination":"/dev-site-documentation-template/guides/"},{"Source":"/dev-site-documentation-template/guides/index","Destination":"/dev-site-documentation-template/guides/"},{"Source":"/dev-site-documentation-template/guides/migrating","Destination":"/dev-site-documentation-template/guides/migrating/"},{"Source":"/dev-site-documentation-template/guides/migrating/index","Destination":"/dev-site-documentation-template/guides/migrating/"},{"Source":"/dev-site-documentation-template/guides/dummy_using_postman","Destination":"/dev-site-documentation-template/guides/dummy_using_postman/"},{"Source":"/dev-site-documentation-template/guides/dummy_using_postman/index","Destination":"/dev-site-documentation-template/guides/dummy_using_postman/"},{"Source":"/dev-site-documentation-template/guides/dummy_oauth_client","Destination":"/dev-site-documentation-template/guides/dummy_oauth_client/"},{"Source":"/dev-site-documentation-template/guides/dummy_oauth_client/index","Destination":"/dev-site-documentation-template/guides/dummy_oauth_client/"},{"Source":"/dev-site-documentation-template/guides/dummy_metrics_api","Destination":"/dev-site-documentation-template/guides/dummy_metrics_api/"},{"Source":"/dev-site-documentation-template/guides/dummy_metrics_api/index","Destination":"/dev-site-documentation-template/guides/dummy_metrics_api/"},{"Source":"/dev-site-documentation-template/api","Destination":"/dev-site-documentation-template/api/"},{"Source":"/dev-site-documentation-template/api/index","Destination":"/dev-site-documentation-template/api/"},{"Source":"/dev-site-documentation-template/api/1-4/","Destination":"/dev-site-documentation-template/api/1-4"}],":type":"sheet"}
+{
+    "total": 23,
+    "offset": 0,
+    "limit": 23,
+    "data": [
+        {
+            "Source": "/cai-soft-binding-api",
+            "Destination": "/cai-soft-binding-api/"
+        },
+        {
+            "Source": "/cai-soft-binding-api/index",
+            "Destination": "/cai-soft-binding-api/"
+        },
+        {
+            "Source": "/cai-soft-binding-api/support",
+            "Destination": "/cai-soft-binding-api/support/"
+        },
+        {
+            "Source": "/cai-soft-binding-api/support/index",
+            "Destination": "/cai-soft-binding-api/support/"
+        },
+        {
+            "Source": "/cai-soft-binding-api/support/contribute",
+            "Destination": "/cai-soft-binding-api/support/contribute/"
+        },
+        {
+            "Source": "/cai-soft-binding-api/support/contribute/index",
+            "Destination": "/cai-soft-binding-api/support/contribute/"
+        },
+        {
+            "Source": "/cai-soft-binding-api/support/community",
+            "Destination": "/cai-soft-binding-api/support/community/"
+        },
+        {
+            "Source": "/cai-soft-binding-api/support/community/index",
+            "Destination": "/cai-soft-binding-api/support/community/"
+        },
+        {
+            "Source": "/cai-soft-binding-api/support/FAQ",
+            "Destination": "/cai-soft-binding-api/support/FAQ/"
+        },
+        {
+            "Source": "/cai-soft-binding-api/support/FAQ/index",
+            "Destination": "/cai-soft-binding-api/support/FAQ/"
+        },
+        {
+            "Source": "/cai-soft-binding-api/guides",
+            "Destination": "/cai-soft-binding-api/guides/"
+        },
+        {
+            "Source": "/cai-soft-binding-api/guides/index",
+            "Destination": "/cai-soft-binding-api/guides/"
+        },
+        {
+            "Source": "/cai-soft-binding-api/guides/migrating",
+            "Destination": "/cai-soft-binding-api/guides/migrating/"
+        },
+        {
+            "Source": "/cai-soft-binding-api/guides/migrating/index",
+            "Destination": "/cai-soft-binding-api/guides/migrating/"
+        },
+        {
+            "Source": "/cai-soft-binding-api/guides/dummy_using_postman",
+            "Destination": "/cai-soft-binding-api/guides/dummy_using_postman/"
+        },
+        {
+            "Source": "/cai-soft-binding-api/guides/dummy_using_postman/index",
+            "Destination": "/cai-soft-binding-api/guides/dummy_using_postman/"
+        },
+        {
+            "Source": "/cai-soft-binding-api/guides/dummy_oauth_client",
+            "Destination": "/cai-soft-binding-api/guides/dummy_oauth_client/"
+        },
+        {
+            "Source": "/cai-soft-binding-api/guides/dummy_oauth_client/index",
+            "Destination": "/cai-soft-binding-api/guides/dummy_oauth_client/"
+        },
+        {
+            "Source": "/cai-soft-binding-api/guides/dummy_metrics_api",
+            "Destination": "/cai-soft-binding-api/guides/dummy_metrics_api/"
+        },
+        {
+            "Source": "/cai-soft-binding-api/guides/dummy_metrics_api/index",
+            "Destination": "/cai-soft-binding-api/guides/dummy_metrics_api/"
+        },
+        {
+            "Source": "/cai-soft-binding-api/api",
+            "Destination": "/cai-soft-binding-api/api/"
+        },
+        {
+            "Source": "/cai-soft-binding-api/api/index",
+            "Destination": "/cai-soft-binding-api/api/"
+        },
+        {
+            "Source": "/cai-soft-binding-api/api/1-4/",
+            "Destination": "/cai-soft-binding-api/api/1-4"
+        }
+    ],
+    ":type": "sheet"
+}
