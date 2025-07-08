@@ -2,18 +2,22 @@
 
 This repo was created from the template <https://github.com/AdobeDocs/dev-docs-template>.
 
+EDS is similar to Gatsby with some caveats; see [wiki](https://wiki.corp.adobe.com/x/rYfvxg#DeveloperWebsite--63309052) (Best Practices for Migration).
+
+
 To test the site:
 
 1. Create a branch called `stage`.
 1. Test that branch by deploying to stage: Go to **Actions > Deployment > Run workflow** and select stage branch and env.
+1. Wiew at <https://developer-stage.adobe.com/cai-soft-binding-api>.
 1. If stage looks good merge to `main`.
-1. Deploy `main` to prod
-
-deploy to stage, and view on <https://developer-stage.adobe.com/cai-soft-binding-api>.
+1. Deploy `main` to prod.
 
 ## Git config
 
+```
 git config core.ignorecase false
+```
 
 ## How to set navigation
 
