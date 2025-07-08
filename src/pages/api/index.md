@@ -1,1 +1,1 @@
-<RedoclyAPIBlock src="/cai-soft-binding-api/petstore.json" />
+<RedoclyAPIBlock src="/cai-soft-binding-api/soft-binding.json" />

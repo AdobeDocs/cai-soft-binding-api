@@ -9,7 +9,7 @@
     - [Cat Analytics](/index.md)
     - [Guides](/guides/index.md)
     - API Reference
-        - [Cat Reference v2.0](/api/index.md)
+        - [Soft Binding v1.0](/api/index.md)
         - [Cat Reference v1.4](/api/1-4.md)
     - [Support](/support/index.md)
 

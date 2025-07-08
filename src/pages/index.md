@@ -1,13 +1,13 @@
 ---
-title: Overview - Cat Analytics
-description: This is the overview page of Cat Analytics
+title: CAI Soft Binding API
+description: Watermarking API for Durable Content Credentials
 contributors:
-  - https://github.com/icaraps 
+  - https://github.com/crandmck 
 ---
 
 <HeroSimple slots="heading, text"/>
 
-# Cat Analytics API
+# CAI Soft Binding API
 
 Cat Product API offers limitless ways to integrate your most important customer data into key business processes. Cat Product API offer limitless ways.
 
