@@ -2,15 +2,12 @@
     - /cai-soft-binding-api/
 
 - versions:
-    - [v2.0](/index.md) selected
-    - [v1.4](https://github.com/AdobeDocs/dev-site) 
+    - [v1.0](/index.md) selected
 
 - pages:
-    - [Cat Analytics](/index.md)
-    - [Guides](/guides/index.md)
+    - [Soft Binding API](/index.md)
     - API Reference
         - [Soft Binding v1.0](/api/index.md)
-        - [Cat Reference v1.4](/api/1-4.md)
     - [Support](/support/index.md)
 
 - subPages:

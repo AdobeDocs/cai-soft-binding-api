@@ -1,5 +1,5 @@
 ---
-title: CAI Soft Binding API
+title: CAI Soft binding API
 description: Watermarking API for Durable Content Credentials
 contributors:
   - https://github.com/crandmck 
@@ -7,78 +7,14 @@ contributors:
 
 <HeroSimple slots="heading, text"/>
 
-# CAI Soft Binding API
+# CAI Soft binding API
 
-Description TBD.
+The soft binding resolution API is a web API providing a standard way of retrieving C2PA manifest stores from a soft binding resolution API endpoint given a soft binding value, a manifest identifier, or an asset.
 
-<Resources slots="heading, links"/>
+C2PA specifies a mechanism for recovering a C2PA manifest for an asset, for example when the metadata containing the C2PA manifest has been stripped. This mechanism is a _soft binding_ (for example an invisible watermark or content fingerprint). The soft binding is used to look up the C2PA manifest within a Manifest Repository. The soft binding is described by the soft binding assertion.
 
-#### Resources
+## API reference
 
-* [Quickstart Guide](https://developer.adobe.com)
-* [Cat Analytics Github Repo](https://github.com/AdobeDocs/dev-site)
+[Try the API](api/index.md) using the Swagger UI. Read the endpoint descriptions and make test API calls.
 
-## Overview
 
-This documentation provides instructions for Catt Analytics 2.0 APIs. For working with Cat Analytics APIs, see [Cat Analytics API Documentation](https://github.com/AdobeDocs/dev-site).
-
-The Cat Analytics APIs are a collection of APIs that power Cat Analytics products like Cat Workspace.
-The APIs allow for the creation of data rich user interfaces that you can use to manipulate and integrate data.
-You can also create reports to explore, get insights, or answer important questions about your data.
-
-## Discover
-
-<DiscoverBlock width="100%" slots="heading, link, text"/>
-
-### Get Started
-
-[Quickstart Guide](guides/index.md)
-
-Get started with the Cat Analytics APIs.
-
-<DiscoverBlock slots="heading, link, text"/>
-
-### Guides
-
-[Calculated Metrics API](guides/dummy_metrics_api/index.md)
-
-Returns information on the user's company that is necessary for making other Cat Analytics API calls.
-
-<DiscoverBlock slots="link, text"/>
-
-[Segments API](guides/dummy_oauth_client/index.md)
-
-Provides configuration guidance and best practices for the /segments endpoint.
-
-<DiscoverBlock slots="link, text"/>
-
-[Reporting Guide API](guides/dummy_using_postman/index.md)
-
-Provides configuration guidance and best practices for the /reports endpoint.
-
-<DiscoverBlock slots="link, text"/>
-
-[Migrating from 1.4 to 2.0](guides/migrating/index.md)
-
-For help migrating from the 1.4 versions of the Analytics API to the newer and more capable /reports API.
-
-<DiscoverBlock width="100%" slots="heading, link, text"/>
-
-### API References
-
-[Try the API](api/index.md)
-
-Try the Analytics API with Swagger UI. Explore, make calls, with full endpoint descriptions.
-
-## Contributing
-
-We encourage you to participate in our open documentation initiative, if you have suggestions, corrections, additions
-or deletions for this documentation, check out the source from [this github repo](https://github.com/adobe/gatsby-theme-spectrum-example), and submit a pull
-request with your contribution. For more information, refer to the [contributing page](support/contribute/index.md).
-
-## API Requests & Rate Limits
-
-The timeout for API requests through adobe.io is currently *60 seconds*.
-
-The default rate limit for an Cat Analytics Company is *120 requests per minute*. (The limit is enforced as *12 requests every 6 seconds*).
-When rate limiting is being enforced you will get `429` HTTP response codes with the following response body: `{"error_code":"429050","message":"Too many requests"}`.

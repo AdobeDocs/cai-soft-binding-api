@@ -1,10 +1,12 @@
 ## General instructions
 
+This repo was created from the template <https://github.com/AdobeDocs/dev-docs-template>.
+
 To test the site:
 
 1. Create a branch called `stage`.
-1. Test that branch by deploying to stage: Go to **Actions > Deployment > Run workflow** and choose stage branch and env.
-1. If stage looks good merge to `main`
+1. Test that branch by deploying to stage: Go to **Actions > Deployment > Run workflow** and select stage branch and env.
+1. If stage looks good merge to `main`.
 1. Deploy `main` to prod
 
 deploy to stage, and view on <https://developer-stage.adobe.com/cai-soft-binding-api>.
