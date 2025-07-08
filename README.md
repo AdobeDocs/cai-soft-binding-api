@@ -8,7 +8,7 @@ EDS is similar to Gatsby with some caveats; see [wiki](https://wiki.corp.adobe.c
 To test the site:
 
 1. Create a branch called `stage`.
-1. Test that branch by deploying to stage: Go to **Actions > Deployment > Run workflow** and select stage branch and env.
+1. Test that branch by deploying to stage: Go to[ **Actions > Deployment > Run workflow**](https://github.com/AdobeDocs/cai-soft-binding-api/actions/workflows/deploy.yml) and select stage branch and env.
 1. Wiew at <https://developer-stage.adobe.com/cai-soft-binding-api>.
 1. If stage looks good merge to `main`.
 1. Deploy `main` to prod.

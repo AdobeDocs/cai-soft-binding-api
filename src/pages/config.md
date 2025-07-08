@@ -7,5 +7,3 @@
 - pages:
     - [Soft Binding API](/index.md)
     - [API Reference](/api/index.md)
-
-
