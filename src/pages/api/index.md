@@ -1,1 +1,1 @@
-<RedoclyAPIBlock src="/cai-soft-binding-api/soft-binding.json" />
+<RedoclyAPIBlock src="/cai-soft-binding-api/soft-binding.json" disableSidebar />
