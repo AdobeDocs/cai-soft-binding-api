@@ -17,17 +17,14 @@
   "paths": {
     "/matches/byContent": {
       "post": {
-        "tags": [
-          "query"
-        ],
-        "summary": "Finds C2PA Manifest identifiers using a digital asset.",
-        "description": "Find zero or more C2PA Manifest identifiers within the manifest store using an uploaded file containing a digital asset.",
+        "summary": "Find manifest identifiers using asset",
+        "description": "Find zero or more C2PA manifest identifiers within the manifest store using an uploaded file containing a digital asset.",
         "operationId": "uploadFile",
         "parameters": [
           {
             "name": "alg",
             "in": "query",
-            "description": "A string identifying the soft binding algorithm and version of that algorithm used as per the authoritative list of C2PA soft binding algorithm names available at: https://github.com/c2pa-org/softbinding-algorithm-list",
+            "description": "A string identifying the soft binding algorithm and version of that algorithm used as per the authoritative list of C2PA soft binding algorithms at: https://github.com/c2pa-org/softbinding-algorithm-list",
             "schema": {
               "type": "string"
             }
@@ -45,7 +42,7 @@
           {
             "name": "hintAlg",
             "in": "query",
-            "description": "An optional parameter specifying an additional soft binding algorithm name and version (as per the authoritative list of C2PA soft binding algorithm names available at: https://github.com/c2pa-org/softbinding-algorithm-list) to aid in resolution of the query.",
+            "description": "An optional parameter specifying an additional soft binding algorithm name and version (as per the authoritative list of C2PA soft binding algorithm names at: https://github.com/c2pa-org/softbinding-algorithm-list) to aid in resolution of the query.",
             "schema": {
               "type": "string"
             }
@@ -137,17 +134,14 @@
     },
     "/manifests/{manifestId}": {
       "get": {
-        "tags": [
-          "fetch"
-        ],
-        "summary": "Returns a full C2PA Manifest Store or an active C2PA Manifest.",
-        "description": "Retrieve a C2PA Manifest by manifest identifier. This either returns the active manifest or the entire C2PA Manifest Store that the active manifest identifier is part of. C2PA Manifest identifiers should follow the format described in the C2PA Technical specification at xref:specs:C2PA_Specification.adoc[_unique_identifiers]",
+        "summary": "Get manifest store",
+        "description": "Retrieve a C2PA manifest by manifest identifier. This either returns the active manifest or the entire  manifest store that the active manifest identifier is part of. Manifest identifiers should follow the format described in the [C2PA Technical specification](https://spec.c2pa.org/specifications/specifications/2.2/specs/C2PA_Specification.html#_unique_identifiers).",
         "operationId": "getManifestById",
         "parameters": [
           {
             "name": "returnActiveManifest",
             "in": "query",
-            "description": "Specifies if only the active manifest should be returned. By default the entire C2PA Manifest Store is returned.",
+            "description": "Specifies if only the active manifest should be returned. By default the entire C2PA manifest store is returned.",
             "schema": {
               "type": "boolean",
               "default": false
@@ -156,7 +150,7 @@
           {
             "name": "manifestId",
             "in": "path",
-            "description": "Identifier of the C2PA Manifest to return",
+            "description": "Identifier of the C2PA manifest to return",
             "required": true,
             "schema": {
               "type": "string"
@@ -171,11 +165,11 @@
             }
           },
           "400": {
-            "description": "Invalid C2PA Manifest Id supplied",
+            "description": "Invalid C2PA manifest ID supplied",
             "content": {}
           },
           "404": {
-            "description": "C2PA Manifest Id not found",
+            "description": "C2PA manifest ID not found",
             "content": {}
           },
           "500": {
@@ -271,11 +265,11 @@
               "properties": {
                 "manifestId": {
                   "type": "string",
-                  "description": "Unique identifier of a matched C2PA Manifest"
+                  "description": "Unique identifier of a matched C2PA manifest"
                 },
                 "endpoint": {
                   "type": "string",
-                  "description": "Endpoint of a Soft Binding Resolution API from which the C2PA Manifest may be obtained. If the endpoint is absent then the C2PA Manifest is available from same endpoint the query was sent to using the /manifests endpoint."
+                  "description": "Endpoint of a Soft Binding Resolution API from which the C2PA manifest may be obtained. If the endpoint is absent then the C2PA manifest is available from same endpoint the query was sent to using the /manifests endpoint."
                 },
                 "similarityScore": {
                   "type": "integer",
