@@ -51,7 +51,7 @@ the value of `encoded_string` in the example code above, use the `/matches/byCon
 curl -X POST \
 -T lobos-Cr.jpeg \
 -H 'content-type: image/jpeg' \
--H 'x-api-key: cai-desktop-helper' \
+-H 'x-api-key: <<API_KEY>>' \
 'https://cai-msb.adobe.io/sbapi/matches/byContent?alg=com.adobe.icn.dense&hintAlg=com.adobe.trustmark.P&hintValue=MioxMDAxMDAxMTAxMTAwMDAxMDAxMTEwMDEwMDExMTAxMDAwMTExMTEwMDEwMTAwMTExMDEwMDAwMTEwMDEwMTEwMTExMA=='
 ```
 
@@ -65,9 +65,7 @@ The response will look something like this:
 }
 ```
 
-The value of the `manifestId` property is the manifest ID. 
-
-Then use this value with the `manifests/{manifestID}` route to get the actual CBOR manifest.  For example:
+The value of the `manifestId` property is the manifest ID.  You can use this value with the `manifests/{manifestID}` route to get the actual CBOR manifest.  For example:
 
 https://cai-manifests.adobe.com/manifests/urn-c2pa-93470c24-11e8-4879-9492-28e8625cf357-adobe
 
