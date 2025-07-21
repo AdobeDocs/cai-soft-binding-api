@@ -11,7 +11,7 @@
   },
   "servers": [
     {
-      "url": "https://c2pa.example.org/v1"
+      "url": "https://cai-msb.adobe.io/sbapi"
     }
   ],
   "paths": {
