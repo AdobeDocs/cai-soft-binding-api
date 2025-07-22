@@ -21,12 +21,12 @@ For more information, see:
 
 Follow this process to retrieve manifest data for an asset watermarked with [TrustMark](https://opensource.contentauthenticity.org/docs/durable-cr/trustmark-intro):
 1. [Extract the watermark ID from the asset](#extract-watermark-id-from-asset) by using the TrustMark API.
-1. [Retrieve manifest IDs of assets in the Adobe Content Credentials Cloud that match the watermark ID](#retrieve-manifest-ids-that-match-the-watermark) by using the `/matches/byContent` route.
+1. [Retrieve manifest IDs of assets](#retrieve-manifest-ids-that-match-the-watermark) in the Adobe Content Credentials Cloud that match the watermark ID by using the `/matches/byContent` route.
 1. [Retrieve manifest store](#retrieve-manifest-store) for each matching manifest ID. 
 
 ### Extract watermark ID from asset 
 
-Using an image with a TrustMark watermark, retrieve the watermark ID using the TrustMark API.  TrustMark has implementations in Python, Rust, and JavaScript.  For example, here's how to do it using the Python `decode()` method, for example:
+Using an image with a TrustMark watermark, retrieve the watermark ID using the TrustMark API.  TrustMark has implementations in Python, Rust, and JavaScript.  For example, here's how to do it in Python, using the `decode()` method:
 
 ```py
 from trustmark import TrustMark
@@ -62,7 +62,7 @@ For example:
 
 ```sh
 curl -X POST \
--T lobos-Cr.jpeg \
+-T <<PATH_TO_IMAGE_FILE>> \
 -H 'content-type: image/jpeg' \
 -H 'x-api-key: <<API_KEY>>' \
 'https://cai-msb.adobe.io/sbapi/matches/byContent?alg=com.adobe.icn.dense&hintAlg=com.adobe.trustmark.P&hintValue=MioxMDAxMDAxMTAxMTAwMDAxMDAxMTEwMDEwMDExMTAxMDAwMTExMTEwMDEwMTAwMTExMDEwMDAwMTEwMDEwMTEwMTExMA=='
