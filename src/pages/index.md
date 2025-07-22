@@ -7,7 +7,7 @@ contributors:
 
 <HeroSimple slots="heading, text"/>
 
-# CAI Soft binding API
+# CAI Soft binding resolution API
 
 Provides a web API to retrieve C2PA manifest stores, given a soft binding value, a manifest identifier, or an asset.
 
