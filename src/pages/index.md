@@ -36,13 +36,18 @@ wm_secret, wm_present, wm_schema = tm.decode(stego, MODE='binary')
 
 modified_wm_secret = "2*" + wm_secret
 encoded_bytes = base64.b64encode( modified_wm_secret.encode('utf-8') )
-encoded_string = encoded_bytes.decode('utf-8')
+encoded_watermark_string = encoded_bytes.decode('utf-8')
 
 print(f"Watermark: {wm_secret}")
-print(f"Base64 encoded watermark: {encoded_string}")
+print(f"Base64 encoded watermark: {encoded_watermark_string}")
 ```
 
-Then using the base64-encoded watermark (with "2*" prepended), use the `/matches/byContent` route with the the value of `encoded_string` to fetch the manifest IDs that match the watermark. 
+Then use the `/matches/byContent` route with the the value of `encoded_watermark_string` (the  base64-encoded watermark with "2*" prepended), to fetch the manifest IDs that match the watermark.   
+
+The API supports the following (query) parameters:
+- `alg`: The fingerprint algorithm applied; must be one of the [C2PA approved fingerprint algorithms](https://opensource.contentauthenticity.org/docs/durable-cr/sb-algs). Adobe Content Authenticity uses `com.adobe.icn.dense`, the [Adobe Image Comparator Network Dense Fingerprint](https://openaccess.thecvf.com/content/CVPR2021W/WMF/html/Black_Deep_Image_Comparator_Learning_To_Visualize_Editorial_Change_CVPRW_2021_paper.html).
+- `hintAlg`: The watermark algorithm applied; must be one of the [C2PA approved watermark algorithms](https://opensource.contentauthenticity.org/docs/durable-cr/sb-algs). Adobe Content Authenticity uses `com.adobe.trustmark.P`, [TrustMark Variant P](https://opensource.contentauthenticity.org/docs/durable-cr/trustmark-intro#variants).
+- `hintValue`: The base64-encoded watermark with "2*" prepended. This is the value of `encoded_watermark_string` in the code above.
 
 For example:
 
@@ -56,17 +61,18 @@ curl -X POST \
 
 The response will look something like this:
 ```json
-{"matches":[
-  {"manifestId":"urn-c2pa-93470c24-11e8-4879-9492-28e8625cf357-adobe",
-  "endpoint":"https://cai-manifests.adobe.com/",
-  "similarityScore":null}
+{ "matches": 
+  [
+    { "manifestId":"urn-c2pa-93470c24-11e8-4879-9492-28e8625cf357-adobe",
+    "endpoint":"https://cai-manifests.adobe.com/",
+    "similarityScore":null }
   ]
 }
 ```
 
 The value of the `manifestId` property is the manifest ID.  You can use this value with the `manifests/{manifestID}` route to get the actual CBOR manifest.  For example:
 
-https://cai-manifests.adobe.com/manifests/urn-c2pa-93470c24-11e8-4879-9492-28e8625cf357-adobe
+<https://cai-manifests.adobe.com/manifests/urn-c2pa-93470c24-11e8-4879-9492-28e8625cf357-adobe>
 
 You can also view the image on the Adobe Content Authenticity website, providing the manifest ID in the URL like this:
 
@@ -76,7 +82,7 @@ https://contentauthenticity.adobe.com/inspect?source=https%3A%2F%2Fcai-manifests
 
 For example:
 
-https://contentauthenticity.adobe.com/inspect?source=https%3A%2F%2Fcai-manifests.adobe.com%2Fmanifests%2Furn-c2pa-93470c24-11e8-4879-9492-28e8625cf357-adobe
+<https://contentauthenticity.adobe.com/inspect?source=https%3A%2F%2Fcai-manifests.adobe.com%2Fmanifests%2Furn-c2pa-93470c24-11e8-4879-9492-28e8625cf357-adobe>
 
 ## API reference
 
