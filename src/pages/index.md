@@ -19,7 +19,14 @@ For more information, see:
 
 ## Workflow
 
-Using an image with a TrustMark watermark, retrieve the watermark ID using the TrustMark `decode()` method, for example:
+Follow this process to retrieve manifest data for an asset watermarked with [TrustMark](https://opensource.contentauthenticity.org/docs/durable-cr/trustmark-intro):
+1. Extract the watermark ID from the asset using the TrustMark API.
+1. Use the `/matches/byContent` route to retrieve manifest IDs of assets in the Adobe Content Credentials Cloud that match the watermark ID.
+1. Retrieve manifest store for each matching manifest ID. 
+
+### Extract watermark ID from asset 
+
+Using an image with a TrustMark watermark, retrieve the watermark ID using the TrustMark API.  TrustMark has implementations in Python, Rust, and JavaScript.  For example, here's how to do it using the Python `decode()` method, for example:
 
 ```py
 from trustmark import TrustMark
@@ -42,12 +49,14 @@ print(f"Watermark: {wm_secret}")
 print(f"Base64 encoded watermark: {encoded_watermark_string}")
 ```
 
+### Retrieve manifest IDs that match the watermark
+
 Then use the `/matches/byContent` route with the the value of `encoded_watermark_string` (the  base64-encoded watermark with "2*" prepended), to fetch the manifest IDs that match the watermark.   
 
 The API supports the following (query) parameters:
 - `alg`: The fingerprint algorithm applied; must be one of the [C2PA approved fingerprint algorithms](https://opensource.contentauthenticity.org/docs/durable-cr/sb-algs). Adobe Content Authenticity uses `com.adobe.icn.dense`, the [Adobe Image Comparator Network Dense Fingerprint](https://openaccess.thecvf.com/content/CVPR2021W/WMF/html/Black_Deep_Image_Comparator_Learning_To_Visualize_Editorial_Change_CVPRW_2021_paper.html).
 - `hintAlg`: The watermark algorithm applied; must be one of the [C2PA approved watermark algorithms](https://opensource.contentauthenticity.org/docs/durable-cr/sb-algs). Adobe Content Authenticity uses `com.adobe.trustmark.P`, [TrustMark Variant P](https://opensource.contentauthenticity.org/docs/durable-cr/trustmark-intro#variants).
-- `hintValue`: The base64-encoded watermark with "2*" prepended. This is the value of `encoded_watermark_string` in the code above.
+- `hintValue`: The base64-encoded watermark with "2*" prepended. This is the value of `encoded_watermark_string` in the example code above.
 
 For example:
 
@@ -70,7 +79,9 @@ The response will look something like this:
 }
 ```
 
-The value of the `manifestId` property is the manifest ID.  You can use this value with the `manifests/{manifestID}` route to get the actual CBOR manifest.  For example:
+### Retrieve manifest store
+
+The value of the `manifestId` property is the manifest ID.  You can use this value with the `manifests/{manifestID}` route to get the actual CBOR manifest store.  For example:
 
 <https://cai-manifests.adobe.com/manifests/urn-c2pa-93470c24-11e8-4879-9492-28e8625cf357-adobe>
 
