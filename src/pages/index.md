@@ -20,9 +20,9 @@ For more information, see:
 ## Workflow
 
 Follow this process to retrieve manifest data for an asset watermarked with [TrustMark](https://opensource.contentauthenticity.org/docs/durable-cr/trustmark-intro):
-1. Extract the watermark ID from the asset using the TrustMark API.
-1. Use the `/matches/byContent` route to retrieve manifest IDs of assets in the Adobe Content Credentials Cloud that match the watermark ID.
-1. Retrieve manifest store for each matching manifest ID. 
+1. [Extract the watermark ID from the asset](#extract-watermark-id-from-asset) by using the TrustMark API.
+1. [Retrieve manifest IDs of assets in the Adobe Content Credentials Cloud that match the watermark ID](#retrieve-manifest-ids-that-match-the-watermark) by using the `/matches/byContent` route.
+1. [Retrieve manifest store](#retrieve-manifest-store) for each matching manifest ID. 
 
 ### Extract watermark ID from asset 
 
@@ -81,23 +81,27 @@ The response will look something like this:
 
 ### Retrieve manifest store
 
-The value of the `manifestId` property is the manifest ID.  You can use this value with the `manifests/{manifestID}` route to get the actual CBOR manifest store.  For example:
+The value of the `manifestId` property is the manifest ID.  You can use this value with the `manifests/{manifestID}` route to get the actual CBOR manifest store.  
 
 ```
-https://cai-manifests.adobe.com/manifests/urn-c2pa-93470c24-11e8-4879-9492-28e8625cf357-adobe>
-```
-
-You can also view the image on the Adobe Content Authenticity website, providing the manifest ID in the URL like this:
-
-```
-https://contentauthenticity.adobe.com/inspect?source=https%3A%2F%2Fcai-manifests.adobe.com%2Fmanifests%2F<<MANIFEST_ID>>
+https://cai-manifests.adobe.com/manifests/<<MANIFEST_ID>>
 ```
 
 For example:
 
+[https://cai-manifests.adobe.com/manifests/urn-c2pa-93470c24-11e8-4879-9492-28e8625cf357-adobe](https://cai-manifests.adobe.com/manifests/urn-c2pa-93470c24-11e8-4879-9492-28e8625cf357-adobe)
+
+
+You can also view the image on the Adobe Content Authenticity website, providing the manifest ID in the URL like this:
+
 ```
-https://contentauthenticity.adobe.com/inspect?source=https%3A%2F%2Fcai-manifests.adobe.com%2Fmanifests%2Furn-c2pa-93470c24-11e8-4879-9492-28e8625cf357-adobe
+https://contentauthenticity.adobe.com/inspect
+?source=https%3A%2F%2Fcai-manifests.adobe.com%2Fmanifests%2F<<MANIFEST_ID>>
 ```
+
+For example:
+
+[https://contentauthenticity.adobe.com/inspect?source=https%3A%2F%2Fcai-manifests.adobe.com%2Fmanifests%2Furn-c2pa-93470c24-11e8-4879-9492-28e8625cf357-adobe](https://contentauthenticity.adobe.com/inspect?source=https%3A%2F%2Fcai-manifests.adobe.com%2Fmanifests%2Furn-c2pa-93470c24-11e8-4879-9492-28e8625cf357-adobe)
 
 ## API reference
 
