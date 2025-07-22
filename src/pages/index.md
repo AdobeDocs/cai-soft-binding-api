@@ -42,10 +42,9 @@ print(f"Watermark: {wm_secret}")
 print(f"Base64 encoded watermark: {encoded_string}")
 ```
 
-Then using the base64-encoded watermark (with "2*" prepended), 
+Then using the base64-encoded watermark (with "2*" prepended), use the `/matches/byContent` route with the the value of `encoded_string` to fetch the manifest IDs that match the watermark. 
 
-the value of `encoded_string` in the example code above, use the `/matches/byContent` route to fetch the manifest IDs that match the watermark. 
-
+For example:
 
 ```sh
 curl -X POST \
