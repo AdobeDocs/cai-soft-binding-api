@@ -9,7 +9,7 @@ contributors:
 
 # CAI Soft binding resolution API
 
-Provides a web API to retrieve C2PA manifest stores, given a soft binding value, a manifest identifier, or an asset.
+A web API to retrieve C2PA manifest stores, given a soft binding value from an asset.
 
 A  _soft binding_ in a C2PA manifest enables recovering the manifest for an asset even when the manifest has been stripped from the asset.  You can use the soft binding to look up the C2PA manifest within an online manifest repository. Soft bindings are described using _soft binding assertions_ such as a fingerprint computed from the digital content or an invisible watermark embedded within the digital content. These soft bindings enable digital content to be matched even if the underlying bits differ.
 
@@ -49,9 +49,11 @@ print(f"Watermark: {wm_secret}")
 print(f"Base64 encoded watermark: {encoded_watermark_string}")
 ```
 
+The result is a base 64 encoded value like `MioxMDAxMDAxMTAxMTAwMDAxMDAxMTEwMDEwMDExMTAxMDAwMTExMTEwMDEwMTAwMTExMDEwMDAwMTEwMDEwMTEwMTExMA==`
+
 ### Retrieve manifest IDs that match the watermark
 
-Use the `/matches/byContent` route with the the value of `encoded_watermark_string` (the  base64-encoded watermark with "2*" prepended), to fetch the manifest IDs that match the watermark.   
+Use the `/matches/byContent` route with the the value of `encoded_watermark_string` (the base64-encoded watermark with "2*" prepended), to fetch the manifest IDs that match the watermark.   
 
 The API supports the following query parameters:
 - `alg`: The fingerprint algorithm applied; must be one of the [C2PA approved fingerprint algorithms](https://opensource.contentauthenticity.org/docs/durable-cr/sb-algs). [Adobe Content Authenticity](https://contentauthenticity.adobe.com/) uses `com.adobe.icn.dense`, the [Adobe Image Comparator Network Dense Fingerprint](https://openaccess.thecvf.com/content/CVPR2021W/WMF/html/Black_Deep_Image_Comparator_Learning_To_Visualize_Editorial_Change_CVPRW_2021_paper.html).
@@ -79,7 +81,7 @@ The response will look something like this:
 }
 ```
 
-The value of the `manifestId` property is the manifest ID.  
+In the response, the value of the `manifestId` property is the manifest ID of the asset.  
 
 ### Retrieve manifest store
 
