@@ -1,84 +1,114 @@
 ---
-title: Overview - Cat Analytics
-description: This is the overview page of Cat Analytics
+title: CAI Soft binding resolution API
+description: Watermark resolution API for Durable Content Credentials
 contributors:
-  - https://github.com/icaraps 
+  - https://github.com/crandmck 
 ---
 
 <HeroSimple slots="heading, text"/>
 
-# Cat Analytics API
+# CAI Soft binding resolution API
 
-Cat Product API offers limitless ways to integrate your most important customer data into key business processes. Cat Product API offer limitless ways.
+A web API to retrieve C2PA manifest stores, given a soft binding value from an asset.
 
-<Resources slots="heading, links"/>
+A  _soft binding_ in a C2PA manifest enables recovering the manifest for an asset even when the manifest has been stripped from the asset.  You can use the soft binding to look up the C2PA manifest within an online manifest repository. Soft bindings are described using _soft binding assertions_ such as a fingerprint computed from the digital content or an invisible watermark embedded within the digital content. These soft bindings enable digital content to be matched even if the underlying bits differ.
 
-#### Resources
+For more information, see:
+- [Content Credentials technical specification](https://spec.c2pa.org/specifications/specifications/2.2/specs/C2PA_Specification.html#_soft_bindings).
+- [C2PA Soft Binding API technical specification](https://spec.c2pa.org/specifications/specifications/2.2/softbinding/Decoupled.html).
 
-* [Quickstart Guide](https://developer.adobe.com)
-* [Cat Analytics Github Repo](https://github.com/AdobeDocs/dev-site)
+## Workflow
 
-## Overview
+Follow this process to retrieve manifest data for an asset watermarked with [TrustMark](https://opensource.contentauthenticity.org/docs/durable-cr/trustmark-intro):
+1. [Extract the watermark ID from the asset](#extract-watermark-id-from-asset) by using the TrustMark API.
+1. [Retrieve manifest IDs of assets](#retrieve-manifest-ids-that-match-the-watermark) in the Adobe Content Credentials Cloud that match the watermark ID by using the `/matches/byContent` route.
+1. [Retrieve manifest store](#retrieve-manifest-store) for each matching manifest ID. 
 
-This documentation provides instructions for Catt Analytics 2.0 APIs. For working with Cat Analytics APIs, see [Cat Analytics API Documentation](https://github.com/AdobeDocs/dev-site).
+### Extract watermark ID from asset 
 
-The Cat Analytics APIs are a collection of APIs that power Cat Analytics products like Cat Workspace.
-The APIs allow for the creation of data rich user interfaces that you can use to manipulate and integrate data.
-You can also create reports to explore, get insights, or answer important questions about your data.
+Using an image with a TrustMark watermark, retrieve the watermark ID using the TrustMark API.  TrustMark has implementations in Python, Rust, and JavaScript.  For example, here's how to do it in Python, using the `decode()` method:
 
-## Discover
+```py
+from trustmark import TrustMark
+from PIL import Image
+import base64
 
-<DiscoverBlock width="100%" slots="heading, link, text"/>
+EXAMPLE_FILE = 'path_to_watermarked_image.jpeg' 
 
-### Get Started
+MODE='P'
+tm=TrustMark(verbose=True, model_type=MODE, encoding_type=TrustMark.Encoding.BCH_4)
+stego = Image.open(EXAMPLE_FILE).convert('RGB')
 
-[Quickstart Guide](guides/index.md)
+wm_secret, wm_present, wm_schema = tm.decode(stego, MODE='binary')
 
-Get started with the Cat Analytics APIs.
+modified_wm_secret = "2*" + wm_secret
+encoded_bytes = base64.b64encode( modified_wm_secret.encode('utf-8') )
+encoded_watermark_string = encoded_bytes.decode('utf-8')
 
-<DiscoverBlock slots="heading, link, text"/>
+print(f"Watermark: {wm_secret}")
+print(f"Base64 encoded watermark: {encoded_watermark_string}")
+```
 
-### Guides
+The result is a base 64 encoded value like `MioxMDAxMDAxMTAxMTAwMDAxMDAxMTEwMDEwMDExMTAxMDAwMTExMTEwMDEwMTAwMTExMDEwMDAwMTEwMDEwMTEwMTExMA==`
 
-[Calculated Metrics API](guides/dummy_metrics_api/index.md)
+### Retrieve manifest IDs that match the watermark
 
-Returns information on the user's company that is necessary for making other Cat Analytics API calls.
+Use the `/matches/byContent` route with the the value of `encoded_watermark_string` (the base64-encoded watermark with "2*" prepended), to fetch the manifest IDs that match the watermark.   
 
-<DiscoverBlock slots="link, text"/>
+The API supports the following query parameters:
+- `alg`: The fingerprint algorithm applied; must be one of the [C2PA approved fingerprint algorithms](https://opensource.contentauthenticity.org/docs/durable-cr/sb-algs). [Adobe Content Authenticity](https://contentauthenticity.adobe.com/) uses `com.adobe.icn.dense`, the [Adobe Image Comparator Network Dense Fingerprint](https://openaccess.thecvf.com/content/CVPR2021W/WMF/html/Black_Deep_Image_Comparator_Learning_To_Visualize_Editorial_Change_CVPRW_2021_paper.html).
+- `hintAlg`: The watermark algorithm applied; must be one of the [C2PA approved watermark algorithms](https://opensource.contentauthenticity.org/docs/durable-cr/sb-algs). [Adobe Content Authenticity](https://contentauthenticity.adobe.com/) uses `com.adobe.trustmark.P`, [TrustMark Variant P](https://opensource.contentauthenticity.org/docs/durable-cr/trustmark-intro#variants).
+- `hintValue`: The base64-encoded watermark with "2*" prepended. This is the value of `encoded_watermark_string` in the example code above.
 
-[Segments API](guides/dummy_oauth_client/index.md)
+For example:
 
-Provides configuration guidance and best practices for the /segments endpoint.
+```sh
+curl -X POST \
+-T <<PATH_TO_IMAGE_FILE>> \
+-H 'content-type: image/jpeg' \
+-H 'x-api-key: <<API_KEY>>' \
+'https://cai-msb.adobe.io/sbapi/matches/byContent?alg=com.adobe.icn.dense&hintAlg=com.adobe.trustmark.P&hintValue=MioxMDAxMDAxMTAxMTAwMDAxMDAxMTEwMDEwMDExMTAxMDAwMTExMTEwMDEwMTAwMTExMDEwMDAwMTEwMDEwMTEwMTExMA=='
+```
 
-<DiscoverBlock slots="link, text"/>
+The response will look something like this:
+```json
+{ "matches": 
+  [
+    { "manifestId":"urn-c2pa-93470c24-11e8-4879-9492-28e8625cf357-adobe",
+    "endpoint":"https://cai-manifests.adobe.com/",
+    "similarityScore":null }
+  ]
+}
+```
 
-[Reporting Guide API](guides/dummy_using_postman/index.md)
+In the response, the value of the `manifestId` property is the manifest ID of the asset.  
 
-Provides configuration guidance and best practices for the /reports endpoint.
+### Retrieve manifest store
 
-<DiscoverBlock slots="link, text"/>
+Use the manifest ID value with the `manifests/{manifestID}` route to get the actual CBOR manifest store, like this:
 
-[Migrating from 1.4 to 2.0](guides/migrating/index.md)
+```
+https://cai-manifests.adobe.com/manifests/<<MANIFEST_ID>>
+```
 
-For help migrating from the 1.4 versions of the Analytics API to the newer and more capable /reports API.
+For example:
 
-<DiscoverBlock width="100%" slots="heading, link, text"/>
+[https://cai-manifests.adobe.com/manifests/urn-c2pa-93470c24-11e8-4879-9492-28e8625cf357-adobe](https://cai-manifests.adobe.com/manifests/urn-c2pa-93470c24-11e8-4879-9492-28e8625cf357-adobe)
 
-### API References
 
-[Try the API](api/index.md)
+You can also view the image on the [Adobe Content Authenticity](https://contentauthenticity.adobe.com/) website, providing the manifest ID in the URL like this:
 
-Try the Analytics API with Swagger UI. Explore, make calls, with full endpoint descriptions.
+```
+https://contentauthenticity.adobe.com/inspect
+?source=https%3A%2F%2Fcai-manifests.adobe.com%2Fmanifests%2F<<MANIFEST_ID>>
+```
 
-## Contributing
+For example:
 
-We encourage you to participate in our open documentation initiative, if you have suggestions, corrections, additions
-or deletions for this documentation, check out the source from [this github repo](https://github.com/adobe/gatsby-theme-spectrum-example), and submit a pull
-request with your contribution. For more information, refer to the [contributing page](support/contribute/index.md).
+[https://contentauthenticity.adobe.com/inspect?source=https%3A%2F%2Fcai-manifests.adobe.com%2Fmanifests%2Furn-c2pa-93470c24-11e8-4879-9492-28e8625cf357-adobe](https://contentauthenticity.adobe.com/inspect?source=https%3A%2F%2Fcai-manifests.adobe.com%2Fmanifests%2Furn-c2pa-93470c24-11e8-4879-9492-28e8625cf357-adobe)
 
-## API Requests & Rate Limits
+## API reference
 
-The timeout for API requests through adobe.io is currently *60 seconds*.
+[Try the API](api/index.md) using the Swagger UI. Read the endpoint descriptions and make test API calls.
 
-The default rate limit for an Cat Analytics Company is *120 requests per minute*. (The limit is enforced as *12 requests every 6 seconds*).
-When rate limiting is being enforced you will get `429` HTTP response codes with the following response body: `{"error_code":"429050","message":"Too many requests"}`.
+

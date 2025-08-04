@@ -1,0 +1,303 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "CAI Soft Binding Resolution API",
+    "description": "The CAI Soft Binding Resolution API provides a web service API endpoint for matching soft bindings such as watermarks or fingerprints to C2PA manifests.",
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "description": "C2PA Soft Binding Resolution API Specification",
+    "url": "https://spec.c2pa.org/specifications/specifications/2.2/softbinding/Decoupled.html"
+  },
+  "servers": [
+    {
+      "url": "https://cai-msb.adobe.io/sbapi"
+    }
+  ],
+  "paths": {
+    "/matches/byContent": {
+      "post": {
+        "summary": "Find manifest identifiers using asset",
+        "description": "Find zero or more C2PA manifest identifiers within the manifest store using an uploaded file containing a digital asset.",
+        "operationId": "uploadFile",
+        "parameters": [
+          {
+            "name": "alg",
+            "in": "query",
+            "description": "A string identifying the soft binding algorithm and version of that algorithm used as per the authoritative list of C2PA soft binding algorithms at: https://github.com/c2pa-org/softbinding-algorithm-list",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "maxResults",
+            "in": "query",
+            "description": "The maximum number of manifests identifiers return for the query.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 10
+            }
+          },
+          {
+            "name": "hintAlg",
+            "in": "query",
+            "description": "An optional parameter specifying an additional soft binding algorithm name and version (as per the authoritative list of C2PA soft binding algorithm names at: https://github.com/c2pa-org/softbinding-algorithm-list) to aid in resolution of the query.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "hintValue",
+            "in": "query",
+            "description": "An optional parameter specifying an additional soft binding algorithm value for the corresponding hintAlg to aid in resolution of the query.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Asset to match to manifests.",
+          "content": {
+            "image/*": {
+              "schema": {
+                "type": "string",
+                "format": "binary",
+                "description": "Asset of type image."
+              }
+            },
+            "audio/*": {
+              "schema": {
+                "type": "string",
+                "format": "binary",
+                "description": "Asset of type audio."
+              }
+            },
+            "video/*": {
+              "schema": {
+                "type": "string",
+                "format": "binary",
+                "description": "Asset of type video."
+              }
+            },
+            "application/*": {
+              "schema": {
+                "type": "string",
+                "format": "binary",
+                "description": "Asset of type application, such as `application/pdf`."
+              }
+            },
+            "model/*": {
+              "schema": {
+                "type": "string",
+                "format": "binary",
+                "description": "Asset of type model."
+              }
+            },
+            "text/*": {
+              "schema": {
+                "type": "string",
+                "format": "string",
+                "description": "Asset of type text."
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/c2pa.softBindingQueryResult"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Invalid asset type",
+            "content": {}
+          },
+          "500": {
+            "description": "Service failure",
+            "content": {}
+          }
+        },
+        "security": [
+          {
+            "auth": [
+              "fetch:manifests"
+            ]
+          }
+        ]
+      }
+    },
+    "/manifests/{manifestId}": {
+      "get": {
+        "summary": "Get manifest store",
+        "description": "Retrieve a C2PA manifest by manifest identifier. This either returns the active manifest or the entire  manifest store that the active manifest identifier is part of. Manifest identifiers should follow the format described in the [C2PA Technical specification](https://spec.c2pa.org/specifications/specifications/2.2/specs/C2PA_Specification.html#_unique_identifiers).",
+        "operationId": "getManifestById",
+        "parameters": [
+          {
+            "name": "returnActiveManifest",
+            "in": "query",
+            "description": "Specifies if only the active manifest should be returned. By default the entire C2PA manifest store is returned.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "manifestId",
+            "in": "path",
+            "description": "Identifier of the C2PA manifest to return",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/c2pa": {}
+            }
+          },
+          "400": {
+            "description": "Invalid C2PA manifest ID supplied",
+            "content": {}
+          },
+          "404": {
+            "description": "C2PA manifest ID not found",
+            "content": {}
+          },
+          "500": {
+            "description": "Service failure",
+            "content": {}
+          }
+        },
+        "security": [
+          {
+            "auth": [
+              "fetch:manifests"
+            ]
+          }
+        ]
+      }
+    },
+  },
+  "components": {
+    "schemas": {
+      "c2pa.softBindingAlgList": {
+        "description": "list of the names of soft binding algorithms supported by this service. The authoritative list of name is available here: https://github.com/c2pa-org/softbinding-algorithm-list",
+        "properties": {
+          "watermarks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "oneOf": [
+                {
+                  "required": [
+                    "watermarks"
+                  ]
+                },
+                {
+                  "required": [
+                    "fingerprints"
+                  ]
+                }
+              ],
+              "properties": {
+                "alg": {
+                  "type": "string",
+                  "example": "foo.bar.watermark.1",
+                  "description": "Unique identifier of a fingerprint algorithm."
+                }
+              },
+              "required": [
+                "alg"
+              ]
+            }
+          },
+          "fingerprints": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "alg": {
+                  "type": "string",
+                  "example": "foo.bar.fingerprint.1",
+                  "description": "Unique identifier of a watermark algorithm."
+                }
+              },
+              "required": [
+                "alg"
+              ]
+            }
+          }
+        }
+      },
+      "c2pa.softBindingQuery": {
+        "required": [
+          "value",
+          "alg"
+        ],
+        "type": "object",
+        "properties": {
+          "alg": {
+            "type": "string",
+            "description": "A string identifying the soft binding algorithm and version of that algorithm used."
+          },
+          "value": {
+            "type": "string",
+            "description": "A base64-encoded string describing, in algorithm specific format, the value of the soft binding to be used as the query."
+          }
+        }
+      },
+      "c2pa.softBindingQueryResult": {
+        "type": "object",
+        "properties": {
+          "matches": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "manifestId": {
+                  "type": "string",
+                  "description": "Unique identifier of a matched C2PA manifest"
+                },
+                "endpoint": {
+                  "type": "string",
+                  "description": "Endpoint of a Soft Binding Resolution API from which the C2PA manifest may be obtained. If the endpoint is absent then the C2PA manifest is available from same endpoint the query was sent to using the /manifests endpoint."
+                },
+                "similarityScore": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100,
+                  "description": "An integer score in the range (0-100) representing the strength of match, if appropriate, where 0 is the weakest possible match and 100 is the strongest possible match."
+                }
+              },
+              "required": [
+                "manifestId"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "auth": {
+        "type": "oauth2",
+        "flows": {
+          "implicit": {
+            "authorizationUrl": "http://example.c2pa.org/oauth/dialog",
+            "scopes": {
+              "fetch:manifests": "search and read manifests within the manifest store."
+            }
+          }
+        }
+      }
+    }
+  }
+}

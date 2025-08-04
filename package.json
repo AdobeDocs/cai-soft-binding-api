@@ -8,8 +8,8 @@
         "url": "https://github.com/AdobeDocs/cai-soft-binding-api"
     },
     "author": {
-        "name": "Stephan Ringel",
-        "url": "https://github.com/icaraps"
+        "name": "Content Authenticity InitiativeTeam",
+        "url": "https://github.com/contentauth"
     },
     "dependencies": {
         "@adobe/gatsby-theme-aio": "^4.15.3",
